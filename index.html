@@ -10,7 +10,8 @@
         max-height:125px;
         margin:3px;
         border:1px
-        solid #dedede;}
+        solid #dedede;
+      }
 
       /* The Modal (background) */
       .modal {
@@ -32,7 +33,6 @@
         margin: 15% auto; /* 15% from the top and centered */
         padding: 20px;
         border: 1px solid #888;
-        width: 80%; /* Could be more or less, depending on screen size */
       }
 
       /* The Close Button */
@@ -64,7 +64,7 @@
 
         <!-- Modal content -->
         <div id="modal-content">
-          <span class="close">&times;</span>
+          <div class="close">&times;</div>
         </div>
 
       </div>
@@ -85,8 +85,10 @@
               var serverId = gp.server;
               var id = gp.id;
               var secret = gp.secret;
-              urlArray.push('<img src="https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + id + '_' + secret + '.jpg"/>')
+              urlArray.push('<img onclick="picModal()" src="https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + id + '_' + secret + '.jpg"/>')
             })
+            pagePics(currentPage);
+            pagination();
           } else {
             console.log(this.status);
           }
@@ -104,26 +106,20 @@
 
         //Creates divs for pics to fill
 
-        document.body.onload = pagePics(currentPage);
-        document.body.onload = pagination(allImgs.length);
-
         function pagePics (n) {
           document.getElementById('pics').innerHTML = "";
           for (i = 0; i < 10; i++) {
-            let newDiv = document.createElement("div");
-            let newContent = document.createTextNode(allImgs[(n * 10) + i] + " ");
-            newDiv.appendChild(newContent);
+            let newDiv = document.createElement("span");
+            newDiv.innerHTML = urlArray[(n * 10) + i];
             newDiv.setAttribute("class", "pic");
-            newDiv.setAttribute("onclick", "picModal()");
             document.getElementById('pics').appendChild(newDiv);
           }
         }
 
         // Creates pagination links
 
-        function pagination (n) {
-          let pageNum = Math.ceil(n / 10);
-          for (i = 0; i < pageNum; i++) {
+        function pagination () {
+          for (i = 0; i < 5; i++) {
             let newBtn = document.createElement("button");
             let newContent = document.createTextNode(i + 1);
             newBtn.appendChild(newContent);
@@ -144,8 +140,9 @@
         // When the user clicks on a pic, open the modal
         function picModal () {
           let modalContent = document.getElementById("modal-content")
-          modalContent.innerHTML = event.target.innerHTML;
-          modal.style.display = "block";
+          modalContent.innerHTML = event.target;
+          console.log(event.target)
+          modal.style.display = "flex";
         }
 
         // Get the modal
