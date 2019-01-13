@@ -6,6 +6,12 @@
   <body>
     <style>
 
+      img {
+        max-height:125px;
+        margin:3px;
+        border:1px
+        solid #dedede;}
+
       /* The Modal (background) */
       .modal {
         display: none; /* Hidden by default */
@@ -140,9 +146,33 @@
           }
         }
 
-      //vanilla AJAX
+      //XML request to get photos
+
+      const xhr = new XMLHttpRequest();
+      const url = "https://api.flickr.com/services/rest/?method=flickr.galleries.getPhotos&api_key=fcd46d46c64cbdb47ccd4beea09d944b&gallery_id=66911286-72157703406532791&format=json&nojsoncallback=1";
+
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          let returnValue = JSON.parse(xhr.responseText);
+          console.log(returnValue);
+        } else {
+          console.log(this.status);
+        }
+      };
+      xhr.open("GET", url);
+      xhr.send();
 
       </script>
 
+
+      <h2><div id="galleryTitle"></div></h2>
+      <div style="clear:both;"/>
+      <div id="flickr"/>
+
   </body>
+
+  <h2><div id="galleryTitle"></div></h2>
+  <div style="clear:both;"/>
+  <div id="flickr"/>
+
 </html>
