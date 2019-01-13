@@ -71,7 +71,30 @@
 
       <script>
 
-        //Arrays of all img URLs and current page img URLs, respectively
+        //XML request to get photos
+
+        const xhr = new XMLHttpRequest();
+        const url = "https://api.flickr.com/services/rest/?method=flickr.galleries.getPhotos&api_key=fcd46d46c64cbdb47ccd4beea09d944b&gallery_id=66911286-72157703406532791&format=json&nojsoncallback=1";
+
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            let returnValue = JSON.parse(xhr.responseText);
+            urlArray = [];
+            Array.prototype.forEach.call( returnValue.photos.photo, function( gp, i ) {
+              var farmId = gp.farm;
+              var serverId = gp.server;
+              var id = gp.id;
+              var secret = gp.secret;
+              urlArray.push('<img src="https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + id + '_' + secret + '.jpg"/>')
+            })
+          } else {
+            console.log(this.status);
+          }
+        };
+        xhr.open("GET", url);
+        xhr.send();
+
+        //Array of all img URLs
 
         const allImgs = [];
         let currentPage = 0;
@@ -146,33 +169,8 @@
           }
         }
 
-      //XML request to get photos
-
-      const xhr = new XMLHttpRequest();
-      const url = "https://api.flickr.com/services/rest/?method=flickr.galleries.getPhotos&api_key=fcd46d46c64cbdb47ccd4beea09d944b&gallery_id=66911286-72157703406532791&format=json&nojsoncallback=1";
-
-      xhr.onload = function() {
-        if (xhr.status === 200) {
-          let returnValue = JSON.parse(xhr.responseText);
-          console.log(returnValue);
-        } else {
-          console.log(this.status);
-        }
-      };
-      xhr.open("GET", url);
-      xhr.send();
-
       </script>
 
-
-      <h2><div id="galleryTitle"></div></h2>
-      <div style="clear:both;"/>
-      <div id="flickr"/>
-
   </body>
-
-  <h2><div id="galleryTitle"></div></h2>
-  <div style="clear:both;"/>
-  <div id="flickr"/>
 
 </html>
