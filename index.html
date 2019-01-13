@@ -2,10 +2,47 @@
 <html>
   <head>
     <title>Image Challenge</title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
   <body>
     <style>
+
+      /* The Modal (background) */
+      .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+      }
+
+      /* Modal Content/Box */
+      #modal-content {
+        background-color: #fefefe;
+        margin: 15% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%; /* Could be more or less, depending on screen size */
+      }
+
+      /* The Close Button */
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
 
     </style>
 
@@ -15,6 +52,16 @@
         <button id="prev-btn" onclick="newPage(currentPage - 1)">&lt;</button>
         <button id="next-btn" onclick="newPage(currentPage + 1)">&gt;</button>
       <div>
+
+      <!-- The Modal -->
+      <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div id="modal-content">
+          <span class="close">&times;</span>
+        </div>
+
+      </div>
 
       <script>
 
@@ -37,8 +84,8 @@
             let newDiv = document.createElement("div");
             let newContent = document.createTextNode(allImgs[(n * 10) + i] + " ");
             newDiv.appendChild(newContent);
-            newDiv.setAttribute("class", i);
             newDiv.setAttribute("class", "pic");
+            newDiv.setAttribute("onclick", "picModal()");
             document.getElementById('pics').appendChild(newDiv);
           }
         }
@@ -65,8 +112,35 @@
           pagePics(currentPage);
         }
 
-      //vanilla AJAX
+        // When the user clicks on a pic, open the modal
+        function picModal () {
+          let modalContent = document.getElementById("modal-content")
+          modalContent.innerHTML = event.target.innerHTML;
+          modal.style.display = "block";
+        }
 
+        // Get the modal
+        var modal = document.getElementById('myModal');
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+
+      //vanilla AJAX
 
       </script>
 
