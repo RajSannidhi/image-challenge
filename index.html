@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Image Challenge</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <style>
+
+    </style>
+
+      <div id="pics"></div>
+
+      <div id="page-buttons">
+        <button id="prev-btn" onclick="newPage(currentPage - 1)">&lt;</button>
+        <button id="next-btn" onclick="newPage(currentPage + 1)">&gt;</button>
+      <div>
+
+      <script>
+
+        //Arrays of all img URLs and current page img URLs, respectively
+
+        const allImgs = [];
+        let currentPage = 0;
+        for (i = 0; i < 50; i++) {
+          allImgs.push((i + 1));
+        }
+
+        //Creates divs for pics to fill
+
+        document.body.onload = pagePics(currentPage);
+        document.body.onload = pagination(allImgs.length);
+
+        function pagePics (n) {
+          document.getElementById('pics').innerHTML = "";
+          for (i = 0; i < 10; i++) {
+            let newDiv = document.createElement("div");
+            let newContent = document.createTextNode(allImgs[(n * 10) + i] + " ");
+            newDiv.appendChild(newContent);
+            newDiv.setAttribute("class", i);
+            newDiv.setAttribute("class", "pic");
+            document.getElementById('pics').appendChild(newDiv);
+          }
+        }
+
+        // Creates pagination links
+
+        function pagination (n) {
+          let pageNum = Math.ceil(n / 10);
+          for (i = 0; i < pageNum; i++) {
+            let newBtn = document.createElement("button");
+            let newContent = document.createTextNode(i + 1);
+            newBtn.appendChild(newContent);
+            newBtn.setAttribute("onclick", "newPage(" + (i) + ")");
+            document.getElementById('next-btn').before(newBtn);
+          }
+        }
+
+        //Refreshes currently displayed pics
+
+        function newPage (n) {
+          if (n >= 0 && n <= 4) {
+            currentPage = n
+          }
+          pagePics(currentPage);
+        }
+
+      //vanilla AJAX
+
+
+      </script>
+
+  </body>
+</html>
