@@ -2,15 +2,33 @@
 <html>
   <head>
     <title>Image Challenge</title>
+    <link rel="stylesheet" type="text/css" href="style.css"></link>
   </head>
   <body>
     <style>
 
-      img {
+      .center {
+        margin: auto;
+        width: 50%;
+        padding: 10px;
+      }
+
+      .pic {
         max-height:125px;
+        width: auto;
         margin:3px;
         border:1px
         solid #dedede;
+        border-radius: 10px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
+      }
+
+      button {
+        background-color: #e7e7e7;
+        color: black;
+        text-align: center;
+        font-size: 16px;
+        margin: auto;
       }
 
       /* The Modal (background) */
@@ -33,6 +51,12 @@
         margin: 15% auto; /* 15% from the top and centered */
         padding: 20px;
         border: 1px solid #888;
+        justify-content: center;
+      }
+
+      #pic-frame {
+        width: auto;
+        justify-content: center;
       }
 
       /* The Close Button */
@@ -54,16 +78,17 @@
 
       <div id="pics"></div>
 
-      <div id="page-buttons">
+      <div class="center" id="page-buttons">
         <button id="prev-btn" onclick="newPage(currentPage - 1)">&lt;</button>
         <button id="next-btn" onclick="newPage(currentPage + 1)">&gt;</button>
       <div>
 
       <!-- The Modal -->
-      <div id="myModal" class="modal">
+      <div id="myModal" class="modal center">
 
         <!-- Modal content -->
         <div id="modal-content">
+          <img id="pic-frame" />
           <div class="close">&times;</div>
         </div>
 
@@ -85,7 +110,7 @@
               var serverId = gp.server;
               var id = gp.id;
               var secret = gp.secret;
-              urlArray.push('<img onclick="picModal()" src="https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + id + '_' + secret + '.jpg"/>')
+              urlArray.push('https://farm' + farmId + '.staticflickr.com/' + serverId + '/' + id + '_' + secret + '.jpg')
             })
             pagePics(currentPage);
             pagination();
@@ -109,9 +134,10 @@
         function pagePics (n) {
           document.getElementById('pics').innerHTML = "";
           for (i = 0; i < 10; i++) {
-            let newDiv = document.createElement("span");
-            newDiv.innerHTML = urlArray[(n * 10) + i];
+            let newDiv = document.createElement("img");
             newDiv.setAttribute("class", "pic");
+            newDiv.setAttribute("src", urlArray[(n * 10) + i])
+            newDiv.setAttribute("onclick", "picModal(" + ((n * 10) + i) + ")")
             document.getElementById('pics').appendChild(newDiv);
           }
         }
@@ -138,10 +164,9 @@
         }
 
         // When the user clicks on a pic, open the modal
-        function picModal () {
-          let modalContent = document.getElementById("modal-content")
-          modalContent.innerHTML = event.target;
-          console.log(event.target)
+        function picModal (n) {
+          let modalPic = document.getElementById("pic-frame")
+          modalPic.setAttribute("src", urlArray[n])
           modal.style.display = "flex";
         }
 
