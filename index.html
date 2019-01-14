@@ -9,6 +9,10 @@
 
     <style>
 
+      .description {
+        text-align: center;
+      }
+
       .center {
         margin: auto;
         width: 80%;
@@ -79,6 +83,16 @@
 
     </style>
 
+    <div class="description">
+      <h1>Image API Challenge</h1>
+      <h3>A Paginated Flickr Gallery</h3>
+      <p>This project was created to meet the following requirements, using vanilla JS: <br/>
+      1. Retrieve a list of at least 50 images and display them as thumbnails on a page. <br/>
+      2. Paginate thumbnails by 10 thumbnails per page. <br/>
+      3. Display image in a modal when thumbnail is clicked.
+      </p>
+    </div>
+
       <!-- Gallery div to populate with thumbnails-->
 
       <div id="gallery" class="center"></div>
@@ -104,7 +118,7 @@
         //XML request to get photos
 
         const xhr = new XMLHttpRequest();
-        const url = "https://api.flickr.com/services/rest/?method=flickr.galleries.getPhotos&api_key=fcd46d46c64cbdb47ccd4beea09d944b&gallery_id=66911286-72157703406532791&format=json&nojsoncallback=1";
+        const url = "https://api.flickr.com/services/rest/?method=flickr.galleries.getPhotos&api_key=7c5159edc03570b48c4547044d0988da&gallery_id=66911286-72157703406532791&format=json&nojsoncallback=1";
 
         xhr.onload = function() {
           if (xhr.status === 200) {
